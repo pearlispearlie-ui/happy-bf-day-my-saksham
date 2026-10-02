@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Boyfriend's Day Saksham! 💖</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Comfortaa:wght@700&family=Dancing+Script:wght@700&family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;800&family=Sacramento&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        blush: '#FFF0F5',
+                        softPink: '#FFB6C1',
+                        roseRed: '#FF4D6D',
+                        deepRose: '#C9184A',
+                        warmCream: '#FFFDF9',
+                        goldAccent: '#FFD700',
+                    },
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                        cute: ['Fredoka', 'sans-serif'],
+                        handwriting: ['Caveat', 'cursive'],
+                        script: ['Dancing Script', 'cursive'],
+                        fancy: ['Comfortaa', 'cursive'],
+                        romantic: ['Sacramento', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Scattered Floating Heart Keyframes */
+        @keyframes floatScatter {
+            0% { 
+                transform: translate(0, 0) scale(0.6) rotate(0deg); 
+                opacity: 1; 
+            }
+            50% {
+                opacity: 0.9;
+            }
+            100% { 
+                transform: translate(var(--tx), var(--ty)) scale(var(--scale)) rotate(var(--rot)); 
+                opacity: 0; 
+            }
+        }
+
+        .scatter-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            animation: floatScatter var(--duration) cubic-bezier(0.15, 0.85, 0.35, 1.2) forwards;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 77, 109, 0.4); }
+            50% { box-shadow: 0 0 38px rgba(255, 77, 109, 0.9); }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 2.2s infinite;
+        }
+
+        .perspective-1000 { perspective: 1000px; }
+
+        .card-inner {
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .card-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+        }
+
+        canvas.scratch-canvas {
+            cursor: pointer;
+            touch-action: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF0F5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FFB6C1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-blush via-warmCream to-blush text-gray-800 font-sans min-h-screen overflow-x-hidden relative selection:bg-softPink selection:text-deepRose" onclick="handleFirstInteraction()">
+
+    <!-- Audio Element for Background Music -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://files.catbox.moe/8592ow.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Floating Audio Control Button -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="soundToggleBtn" onclick="event.stopPropagation(); toggleAudio();" class="flex items-center gap-2 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-full shadow-xl border-2 border-softPink text-roseRed font-cute font-bold hover:scale-105 transition-all text-sm">
+            <i class="fa-solid fa-music text-roseRed text-base" id="soundIcon"></i>
+            <span id="soundText">Play Music 🎵</span>
+        </button>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="max-w-4xl mx-auto px-4 py-8 relative">
+
+        <header class="text-center my-6 md:my-10 relative">
+            <h1 class="text-4xl md:text-6xl font-script text-deepRose drop-shadow-sm mb-3">
+                Happy Boyfriend's Day! 💖
+            </h1>
+
+            <p class="text-xl md:text-3xl font-handwriting font-bold text-roseRed max-w-2xl mx-auto mb-8 px-2 leading-relaxed">
+                my baby, my cutiepie, my hubby, my monkey, my jaanu, my everything fr
+            </p>
+
+            <!-- Interactive "Tap to receive my love" Button (Yellow heart removed) -->
+            <div class="flex justify-center items-center my-6">
+                <button onclick="event.stopPropagation(); scatterHearts(event);" class="pulse-glow bg-gradient-to-r from-roseRed to-deepRose text-white font-cute font-bold text-lg md:text-2xl px-8 py-4 rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-3 group cursor-pointer border-2 border-white/40">
+                    <i class="fa-solid fa-heart-pulse text-2xl group-hover:animate-ping"></i>
+                    <span>Tap to receive my love</span>
+                </button>
+            </div>
+        </header>
+
+        <section class="my-10">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+                <div class="bg-white p-3 rounded-2xl shadow-xl border border-softPink transform hover:-translate-y-2 transition-all duration-300">
+                    <img src="https://i.ibb.co/hxfrMY1k/first-1.jpg" alt="Cute moment 1" class="w-full h-72 sm:h-56 md:h-72 object-cover rounded-xl" onerror="this.src='https://placehold.co/400x500/FFB6C1/white?text=Cute+Us+1'">
+                </div>
+                <div class="bg-white p-3 rounded-2xl shadow-xl border border-softPink transform hover:-translate-y-2 transition-all duration-300">
+                    <img src="https://i.ibb.co/7NNffn88/first-2.jpg" alt="Cute moment 2" class="w-full h-72 sm:h-56 md:h-72 object-cover rounded-xl" onerror="this.src='https://placehold.co/400x500/FFB6C1/white?text=Cute+Us+2'">
+                </div>
+                <div class="bg-white p-3 rounded-2xl shadow-xl border border-softPink transform hover:-translate-y-2 transition-all duration-300">
+                    <img src="https://i.ibb.co/SXpX7wj1/first-3.jpg" alt="Cute moment 3" class="w-full h-72 sm:h-56 md:h-72 object-cover rounded-xl" onerror="this.src='https://placehold.co/400x500/FFB6C1/white?text=Cute+Us+3'">
+                </div>
+            </div>
+        </section>
+
+        <section class="my-14">
+            <div class="flex justify-center">
+                <div id="envelopeContainer" class="relative w-full max-w-xl cursor-pointer" onclick="event.stopPropagation(); toggleLetterEnvelope(event);">
+                    
+                    <!-- Sealed Envelope Display -->
+                    <div id="sealedEnvelope" class="bg-rose-100 border-2 border-softPink rounded-3xl p-8 shadow-2xl text-center hover:shadow-rose-200 hover:-translate-y-1 transition-all relative overflow-hidden">
+                        <div class="absolute -top-10 -right-10 w-32 h-32 bg-softPink/30 rounded-full blur-xl"></div>
+                        <div class="text-6xl text-roseRed mb-4 animate-bounce">💌</div>
+                        <h3 class="text-3xl md:text-4xl font-handwriting font-bold text-deepRose">To: my babyboy</h3>
+                        <div class="mt-6 inline-block bg-white px-6 py-2.5 rounded-full border border-softPink text-xs font-cute text-roseRed uppercase tracking-wider font-bold shadow-md">
+                            Tap To Open Letter ✨
+                        </div>
+                    </div>
+
+                    <!-- Opened Love Letter Content -->
+                    <div id="openLetter" class="hidden bg-warmCream border-2 border-goldAccent/50 rounded-3xl p-6 md:p-10 shadow-2xl relative text-gray-800 border-dashed transform transition-all duration-500 scale-95 opacity-0">
+                        <div class="absolute -top-4 right-8 bg-roseRed text-white w-9 h-9 rounded-full flex items-center justify-center shadow-md">
+                            <i class="fa-solid fa-heart text-sm"></i>
+                        </div>
+
+                        <div id="letterBody" class="font-handwriting text-xl md:text-2xl leading-relaxed text-gray-800 space-y-4">
+                            <p class="text-2xl md:text-3xl font-bold text-deepRose">Happy Boyfriend’s Day Saksham! 💗</p>
+                            
+                            <p>I just wanted to take a moment today to remind you how extra special you are to me. And as always, words are never enough for me to describe how much I actually feel the luckiest to have you and how much I love you☹️. I will still try to keep this letter short though hehe.</p>
+                            
+                            <p>Thank you for being my most favourite person ever, for being my safest place and my everything. I cherish every single moment with you with my whole heart, and time just seems to stop whenever I am talking with you. It makes me wish we had nothing else to do but just be with each other ahh tho obviously it’s impossible since that’s not how life works but just saying hehe</p>
+                            
+                            <p>Seriously no matter how things go in life…good, bad or however my mood changes like a weather everyday haha, I just want that every single moment with you. And I want to be and I will be in every single phase of your life too. I just want.. to do every single thing with you.</p>
+                            
+                            <p>I seriously love you more than words can ever say and Ik that you know it too and I promise to be by your side and keep loving you forever and ever and ever and ever. You are mine and always gonna be mine mwaaaaaaahhhhhhhhhhhh💋💋💋.</p>
+                        </div>
+
+                        <div class="mt-8 text-right font-handwriting text-3xl text-roseRed font-bold">
+                            Forever Yours,<br>
+                            Your Love ❤️
+                        </div>
+
+                        <div class="mt-6 text-center border-t border-softPink/40 pt-4">
+                            <button onclick="event.stopPropagation(); toggleLetterEnvelope(event);" class="text-xs font-cute text-gray-400 hover:text-roseRed underline">
+                                Close Letter
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="my-10">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+                <div class="bg-white p-3 rounded-2xl shadow-xl border border-softPink transform hover:-translate-y-2 transition-all duration-300">
+                    <img src="https://i.ibb.co/Xxw7P6Y0/second-1.jpg" alt="Middle moment 1" class="w-full h-72 sm:h-56 md:h-72 object-cover rounded-xl" onerror="this.src='https://placehold.co/400x500/FFB6C1/white?text=Love+You+1'">
+                </div>
+                <div class="bg-white p-3 rounded-2xl shadow-xl border border-softPink transform hover:-translate-y-2 transition-all duration-300">
+                    <img src="https://i.ibb.co/nq5Pr87j/second-2.jpg" alt="Middle moment 2" class="w-full h-72 sm:h-56 md:h-72 object-cover rounded-xl" onerror="this.src='https://placehold.co/400x500/FFB6C1/white?text=Love+You+2'">
+                </div>
+                <div class="bg-white p-3 rounded-2xl shadow-xl border border-softPink transform hover:-translate-y-2 transition-all duration-300">
+                    <img src="https://i.ibb.co/Kcsv88Pz/second-3.jpg" alt="Middle moment 3" class="w-full h-72 sm:h-56 md:h-72 object-cover rounded-xl" onerror="this.src='https://placehold.co/400x500/FFB6C1/white?text=Love+You+3'">
+                </div>
+            </div>
+        </section>
+
+        <section class="my-16">
+            <div class="text-center mb-6">
+                <h2 class="text-3xl md:text-4xl font-cute font-bold text-deepRose flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-sparkles text-goldAccent"></i> Reasons you are the absolute best
+                </h2>
+                <p class="text-sm font-cute text-roseRed mt-1 animate-pulse">✨ Scratch the card below with your finger or mouse! ✨</p>
+            </div>
+
+            <!-- Canvas Scratch Card Container -->
+            <div class="max-w-2xl mx-auto px-2">
+                <div class="relative w-full rounded-3xl shadow-2xl border-4 border-goldAccent/60 bg-gradient-to-br from-roseRed to-deepRose p-6 md:p-8 overflow-hidden min-h-[380px] md:min-h-[420px] flex items-center justify-center">
+                    
+                    <!-- Underneath Secret Text (No quotes) -->
+                    <div id="scratchSecretText" class="text-center text-white font-handwriting text-2xl md:text-3xl leading-relaxed select-none px-2 z-0">
+                        Honestly there are so many reasons that when I thought of adding multiple cards, I thought they wouldn’t be enough bcoz my baby is literally the absolute best for endless number of reasons and i feel like i don’t even need to list them bcoz my love is really just soooooo handsome, sooooooo smartie smart, sooooo cutie, intelligent, supportive, mature, with the bestest smile and ahhhhh soo much more:(
+                    </div>
+
+                    <!-- Interactive Scratch Canvas Overlay -->
+                    <canvas id="scratchCanvas" class="scratch-canvas absolute inset-0 w-full h-full z-10 rounded-2xl"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-16">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-5xl font-cute font-bold text-deepRose tracking-wide">
+                    ✨ To Endless Everything ✨
+                </h2>
+                <p class="text-xs font-cute text-gray-500 mt-2">Tap each photo to flip!</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="h-72 perspective-1000 cursor-pointer" onclick="event.stopPropagation(); flipCard(this)">
+                    <div class="card-inner relative w-full h-full text-center rounded-2xl shadow-xl border-2 border-softPink bg-white">
+                        <div class="card-front absolute inset-0 rounded-2xl p-2 bg-white flex items-center justify-center overflow-hidden">
+                            <img src="https://i.ibb.co/GvLQgtd4/1.jpg" alt="1" class="w-full h-full object-cover rounded-xl" onerror="this.src='https://placehold.co/400x400/FFB6C1/white?text=Hugs'">
+                        </div>
+                        <div class="card-back absolute inset-0 rounded-2xl p-4 flex items-center justify-center bg-gradient-to-br from-roseRed to-deepRose text-white shadow-inner">
+                            <p class="font-fancy text-2xl font-bold tracking-wide">to endless hugs</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="h-72 perspective-1000 cursor-pointer" onclick="event.stopPropagation(); flipCard(this)">
+                    <div class="card-inner relative w-full h-full text-center rounded-2xl shadow-xl border-2 border-softPink bg-white">
+                        <div class="card-front absolute inset-0 rounded-2xl p-2 bg-white flex items-center justify-center overflow-hidden">
+                            <img src="https://i.ibb.co/pvKMwhNS/2.jpg" alt="2" class="w-full h-full object-cover rounded-xl" onerror="this.src='https://placehold.co/400x400/FFB6C1/white?text=Kisses'">
+                        </div>
+                        <div class="card-back absolute inset-0 rounded-2xl p-4 flex items-center justify-center bg-gradient-to-br from-roseRed to-deepRose text-white shadow-inner">
+                            <p class="font-fancy text-2xl font-bold tracking-wide">to endless kisses</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="h-72 perspective-1000 cursor-pointer" onclick="event.stopPropagation(); flipCard(this)">
+                    <div class="card-inner relative w-full h-full text-center rounded-2xl shadow-xl border-2 border-softPink bg-white">
+                        <div class="card-front absolute inset-0 rounded-2xl p-2 bg-white flex items-center justify-center overflow-hidden">
+                            <img src="https://i.ibb.co/0yV71GXq/3.jpg" alt="3" class="w-full h-full object-cover rounded-xl" onerror="this.src='https://placehold.co/400x400/FFB6C1/white?text=Dates'">
+                        </div>
+                        <div class="card-back absolute inset-0 rounded-2xl p-4 flex items-center justify-center bg-gradient-to-br from-roseRed to-deepRose text-white shadow-inner">
+                            <p class="font-fancy text-2xl font-bold tracking-wide">to endless dates</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="h-72 perspective-1000 cursor-pointer" onclick="event.stopPropagation(); flipCard(this)">
+                    <div class="card-inner relative w-full h-full text-center rounded-2xl shadow-xl border-2 border-softPink bg-white">
+                        <div class="card-front absolute inset-0 rounded-2xl p-2 bg-white flex items-center justify-center overflow-hidden">
+                            <img src="https://i.ibb.co/5gK1mSLX/4.jpg" alt="4" class="w-full h-full object-cover rounded-xl" onerror="this.src='https://placehold.co/400x400/FFB6C1/white?text=Cuddles'">
+                        </div>
+                        <div class="card-back absolute inset-0 rounded-2xl p-4 flex items-center justify-center bg-gradient-to-br from-roseRed to-deepRose text-white shadow-inner">
+                            <p class="font-fancy text-2xl font-bold tracking-wide">to endless cuddles</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="h-72 perspective-1000 cursor-pointer" onclick="event.stopPropagation(); flipCard(this)">
+                    <div class="card-inner relative w-full h-full text-center rounded-2xl shadow-xl border-2 border-softPink bg-white">
+                        <div class="card-front absolute inset-0 rounded-2xl p-2 bg-white flex items-center justify-center overflow-hidden">
+                            <img src="https://i.ibb.co/N6PwtSwV/5.jpg" alt="5" class="w-full h-full object-cover rounded-xl" onerror="this.src='https://placehold.co/400x400/FFB6C1/white?text=Yapping'">
+                        </div>
+                        <div class="card-back absolute inset-0 rounded-2xl p-4 flex items-center justify-center bg-gradient-to-br from-roseRed to-deepRose text-white shadow-inner">
+                            <p class="font-fancy text-xl font-bold tracking-wide">to endless yapping sessions</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="h-72 perspective-1000 cursor-pointer" onclick="event.stopPropagation(); flipCard(this)">
+                    <div class="card-inner relative w-full h-full text-center rounded-2xl shadow-xl border-2 border-softPink bg-white">
+                        <div class="card-front absolute inset-0 rounded-2xl p-2 bg-white flex items-center justify-center overflow-hidden">
+                            <img src="https://i.ibb.co/vn1n7rk/6.jpg" alt="6" class="w-full h-full object-cover rounded-xl" onerror="this.src='https://placehold.co/400x400/FFB6C1/white?text=Trips'">
+                        </div>
+                        <div class="card-back absolute inset-0 rounded-2xl p-4 flex items-center justify-center bg-gradient-to-br from-roseRed to-deepRose text-white shadow-inner">
+                            <p class="font-fancy text-xl font-bold tracking-wide">to endless trips together</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 7 -->
+                <div class="h-72 perspective-1000 cursor-pointer" onclick="event.stopPropagation(); flipCard(this)">
+                    <div class="card-inner relative w-full h-full text-center rounded-2xl shadow-xl border-2 border-softPink bg-white">
+                        <div class="card-front absolute inset-0 rounded-2xl p-2 bg-white flex items-center justify-center overflow-hidden">
+                            <img src="https://i.ibb.co/p61vNQbM/7.jpg" alt="7" class="w-full h-full object-cover rounded-xl" onerror="this.src='https://placehold.co/400x400/FFB6C1/white?text=Gaming'">
+                        </div>
+                        <div class="card-back absolute inset-0 rounded-2xl p-4 flex items-center justify-center bg-gradient-to-br from-roseRed to-deepRose text-white shadow-inner">
+                            <p class="font-fancy text-xl font-bold tracking-wide">to endless gaming sessions</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 8 -->
+                <div class="h-72 perspective-1000 cursor-pointer" onclick="event.stopPropagation(); flipCard(this)">
+                    <div class="card-inner relative w-full h-full text-center rounded-2xl shadow-xl border-2 border-softPink bg-white">
+                        <div class="card-front absolute inset-0 rounded-2xl p-2 bg-white flex items-center justify-center overflow-hidden">
+                            <img src="https://i.ibb.co/JFs4Smgh/8.jpg" alt="8" class="w-full h-full object-cover rounded-xl" onerror="this.src='https://placehold.co/400x400/FFB6C1/white?text=Cooking'">
+                        </div>
+                        <div class="card-back absolute inset-0 rounded-2xl p-4 flex items-center justify-center bg-gradient-to-br from-roseRed to-deepRose text-white shadow-inner">
+                            <p class="font-fancy text-lg font-bold tracking-wide">to endless cooking together sessions</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 9 -->
+                <div class="h-72 perspective-1000 cursor-pointer" onclick="event.stopPropagation(); flipCard(this)">
+                    <div class="card-inner relative w-full h-full text-center rounded-2xl shadow-xl border-2 border-softPink bg-white">
+                        <div class="card-front absolute inset-0 rounded-2xl p-2 bg-white flex items-center justify-center overflow-hidden">
+                            <img src="https://i.ibb.co/3YpxRkcP/9.jpg" alt="9" class="w-full h-full object-cover rounded-xl" onerror="this.src='https://placehold.co/400x400/FFB6C1/white?text=Uhm+Uhm'">
+                        </div>
+                        <div class="card-back absolute inset-0 rounded-2xl p-4 flex items-center justify-center bg-gradient-to-br from-roseRed to-deepRose text-white shadow-inner">
+                            <p class="font-fancy text-2xl font-bold tracking-wide">to endless uhm uhm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-20 text-center">
+            <h2 class="text-4xl md:text-6xl font-script font-bold text-deepRose mb-8 tracking-wide">
+                and most importantly..
+            </h2>
+
+            <div class="max-w-lg mx-auto">
+                <div class="h-96 md:h-[480px] perspective-1000 cursor-pointer" onclick="event.stopPropagation(); flipCard(this)">
+                    <div class="card-inner relative w-full h-full text-center rounded-3xl shadow-2xl border-4 border-goldAccent/80 bg-white">
+                        <div class="card-front absolute inset-0 rounded-3xl p-3 bg-white flex items-center justify-center overflow-hidden">
+                            <img src="https://i.ibb.co/j9RN6pyY/10.jpg" alt="10" class="w-full h-full object-contain rounded-2xl bg-rose-50/50" onerror="this.src='https://placehold.co/500x600/FF4D6D/white?text=To+Our+Forever'">
+                        </div>
+                        <div class="card-back absolute inset-0 rounded-3xl p-6 flex items-center justify-center bg-gradient-to-br from-roseRed via-deepRose to-roseRed text-white shadow-2xl">
+                            <p class="font-cute text-3xl md:text-4xl font-bold tracking-wider leading-snug">
+                                TO OUR FOREVER 💕💕💕💕💕
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="my-16 text-center space-y-8 border-t border-softPink/50 pt-10">
+            <!-- Concluding Message -->
+            <p class="font-handwriting text-2xl md:text-3xl text-gray-700 max-w-2xl mx-auto leading-relaxed px-4">
+                Hope you loved this my baby. Honestly it’s nothing big and just a small token of appreciation from my side. I feel like if I were there with you rn, then there is literally so much I could do. And ahh ik it’s still something really precious and big for you but just saying hehe
+            </p>
+
+            <div class="my-8">
+                <h2 class="text-6xl md:text-8xl font-script font-bold text-deepRose drop-shadow-md tracking-wider animate-pulse">
+                    I LOVE YOU
+                </h2>
+            </div>
+
+            <!-- Final Picture -->
+            <div class="max-w-md mx-auto p-3 bg-white rounded-3xl shadow-2xl border-2 border-softPink">
+                <img src="https://i.ibb.co/jvvK6P57/last.jpg" alt="Final picture" class="w-full h-auto rounded-2xl object-cover" onerror="this.src='https://placehold.co/500x500/FFB6C1/white?text=Forever+Together'">
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        let musicStarted = false;
+
+        function handleFirstInteraction() {
+            if (!musicStarted) {
+                const audio = document.getElementById('bgMusic');
+                audio.play().then(() => {
+                    musicStarted = true;
+                    document.getElementById('soundIcon').className = 'fa-solid fa-volume-high text-roseRed';
+                    document.getElementById('soundText').innerText = 'Music Playing 🎵';
+                }).catch(e => {
+                    console.log('Autoplay waiting for manual toggle:', e);
+                });
+            }
+        }
+
+        function toggleAudio() {
+            const audio = document.getElementById('bgMusic');
+            const soundIcon = document.getElementById('soundIcon');
+            const soundText = document.getElementById('soundText');
+
+            if (audio.paused) {
+                audio.play().then(() => {
+                    musicStarted = true;
+                    soundIcon.className = 'fa-solid fa-volume-high text-roseRed';
+                    soundText.innerText = 'Music Playing 🎵';
+                }).catch(err => {
+                    alert('Tap anywhere on the page first, then tap Play Music!');
+                });
+            } else {
+                audio.pause();
+                soundIcon.className = 'fa-solid fa-volume-xmark text-gray-400';
+                soundText.innerText = 'Music Paused 🔇';
+            }
+        }
+
+        /* Multidirectional Scattered Heart Particle Generator (Red/Pink Hearts Only) */
+        function scatterHearts(e) {
+            const heartEmojis = ['❤️', '💕', '💖', '💗', '💓', '💘'];
+            const startX = e ? e.clientX : window.innerWidth / 2;
+            const startY = e ? e.clientY : window.innerHeight / 2;
+
+            for (let i = 0; i < 45; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('scatter-heart');
+                heart.innerText = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                
+                // Calculate randomized 360-degree radial scatter directions
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 280 + 100;
+                
+                const targetX = Math.cos(angle) * distance;
+                const targetY = Math.sin(angle) * distance - 80;
+                
+                const rotation = (Math.random() - 0.5) * 500;
+                const scale = Math.random() * 0.9 + 0.8;
+                const duration = Math.random() * 1.5 + 1.8;
+
+                heart.style.left = `${startX}px`;
+                heart.style.top = `${startY}px`;
+                heart.style.fontSize = `${Math.random() * 24 + 20}px`;
+                
+                heart.style.setProperty('--tx', `${targetX}px`);
+                heart.style.setProperty('--ty', `${targetY}px`);
+                heart.style.setProperty('--rot', `${rotation}deg`);
+                heart.style.setProperty('--scale', scale);
+                heart.style.setProperty('--duration', `${duration}s`);
+                
+                document.body.appendChild(heart);
+
+                setTimeout(() => heart.remove(), duration * 1000);
+            }
+        }
+
+        /* Envelope Toggle Animation */
+        function toggleLetterEnvelope(e) {
+            const sealed = document.getElementById('sealedEnvelope');
+            const open = document.getElementById('openLetter');
+
+            if (open.classList.contains('hidden')) {
+                sealed.classList.add('hidden');
+                open.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    open.classList.remove('scale-95', 'opacity-0');
+                    open.classList.add('scale-100', 'opacity-100');
+                }, 20);
+
+                scatterHearts(e);
+            } else {
+                open.classList.remove('scale-100', 'opacity-100');
+                open.classList.add('scale-95', 'opacity-0');
+                
+                setTimeout(() => {
+                    open.classList.add('hidden');
+                    sealed.classList.remove('hidden');
+                }, 400);
+            }
+        }
+
+        function flipCard(cardWrapper) {
+            const inner = cardWrapper.querySelector('.card-inner');
+            inner.classList.toggle('card-flipped');
+        }
+
+        /* HTML5 Scratch Card Logic */
+        window.addEventListener('load', function() {
+            const canvas = document.getElementById('scratchCanvas');
+            const ctx = canvas.getContext('2d');
+            const parent = canvas.parentElement;
+
+            function resizeCanvas() {
+                canvas.width = parent.clientWidth;
+                canvas.height = parent.clientHeight;
+                initScratchCover();
+            }
+
+            function initScratchCover() {
+                const img = new Image();
+                img.crossOrigin = "anonymous";
+                img.src = 'https://i.ibb.co/FkBpDnbj/scratch-card.jpg';
+                img.onload = function() {
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                };
+                img.onerror = function() {
+                    ctx.fillStyle = '#FF4D6D';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.font = 'bold 24px Fredoka';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('✨ Scratch Here to Reveal ✨', canvas.width / 2, canvas.height / 2);
+                };
+            }
+
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            let isScratching = false;
+
+            function scratch(e) {
+                if (!isScratching) return;
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                
+                const x = clientX - rect.left;
+                const y = clientY - rect.top;
+
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath();
+                ctx.arc(x, y, 32, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            canvas.addEventListener('mousedown', (e) => { isScratching = true; scratch(e); });
+            canvas.addEventListener('mousemove', scratch);
+            window.addEventListener('mouseup', () => { isScratching = false; });
+
+            canvas.addEventListener('touchstart', (e) => { isScratching = true; scratch(e); });
+            canvas.addEventListener('touchmove', scratch);
+            window.addEventListener('touchend', () => { isScratching = false; });
+        });
+    </script>
+</body>
+</html>
