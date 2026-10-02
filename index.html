@@ -110,18 +110,6 @@
 </head>
 <body class="bg-gradient-to-b from-blush via-warmCream to-blush text-gray-800 font-sans min-h-screen overflow-x-hidden relative selection:bg-softPink selection:text-deepRose" onclick="handleFirstInteraction()">
 
-    <!-- Audio Element for Background Music -->
-    <audio id="bgMusic" loop preload="auto">
-        <source src="https://files.catbox.moe/8592ow.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- Floating Audio Control Button -->
-    <div class="fixed top-4 right-4 z-50">
-        <button id="soundToggleBtn" onclick="event.stopPropagation(); toggleAudio();" class="flex items-center gap-2 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-full shadow-xl border-2 border-softPink text-roseRed font-cute font-bold hover:scale-105 transition-all text-sm">
-            <i class="fa-solid fa-music text-roseRed text-base" id="soundIcon"></i>
-            <span id="soundText">Play Music 🎵</span>
-        </button>
-    </div>
 
     <!-- MAIN CONTAINER -->
     <div class="max-w-4xl mx-auto px-4 py-8 relative">
@@ -402,43 +390,7 @@
         </footer>
 
     </div>
-
-    <script>
-        let musicStarted = false;
-
-        function handleFirstInteraction() {
-            if (!musicStarted) {
-                const audio = document.getElementById('bgMusic');
-                audio.play().then(() => {
-                    musicStarted = true;
-                    document.getElementById('soundIcon').className = 'fa-solid fa-volume-high text-roseRed';
-                    document.getElementById('soundText').innerText = 'Music Playing 🎵';
-                }).catch(e => {
-                    console.log('Autoplay waiting for manual toggle:', e);
-                });
-            }
-        }
-
-        function toggleAudio() {
-            const audio = document.getElementById('bgMusic');
-            const soundIcon = document.getElementById('soundIcon');
-            const soundText = document.getElementById('soundText');
-
-            if (audio.paused) {
-                audio.play().then(() => {
-                    musicStarted = true;
-                    soundIcon.className = 'fa-solid fa-volume-high text-roseRed';
-                    soundText.innerText = 'Music Playing 🎵';
-                }).catch(err => {
-                    alert('Tap anywhere on the page first, then tap Play Music!');
-                });
-            } else {
-                audio.pause();
-                soundIcon.className = 'fa-solid fa-volume-xmark text-gray-400';
-                soundText.innerText = 'Music Paused 🔇';
-            }
-        }
-
+  
         /* Multidirectional Scattered Heart Particle Generator (Red/Pink Hearts Only) */
         function scatterHearts(e) {
             const heartEmojis = ['❤️', '💕', '💖', '💗', '💓', '💘'];
